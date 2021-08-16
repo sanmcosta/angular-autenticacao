@@ -1,0 +1,56 @@
+<div class="p-1 mb-2 bg-info text-dark">
+  <h1  style="text-align:center">
+    <i class="bi bi-file-earmark-spreadsheet" 
+       style="font-size: 2rem;"
+    ></i>
+    Lançamentos
+  </h1>    
+</div>
+<div class="table-responsive">
+  <table class="table  table-hover  table-sm">
+    <thead>
+      <tr>
+        <th >Id</th>
+        <th >Data</th>
+        <th >Hora</th>
+        <th >Tipo</th>
+        <th >Localização</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lancamento of lancamentos">
+        <td 
+            class="text-left"         
+            >{{ lancamento.id }}
+        </td> 
+        <td 
+            class="text-left"         
+            >{{ lancamento.data | data | date: "dd/MM/yyyy"}}
+        </td> 
+        <td 
+            class="text-left"         
+            >{{ lancamento.data | hora}}
+        </td>       
+        <td 
+            class="text-left"         
+            >{{ lancamento.tipo | tipo}}
+        </td>             
+        <td class="text-left">
+          <a [href]='urlLocalizacao(lancamento.localizacao)' target="_blank">{{lancamento.localizacao}}
+          </a>
+        </td>                           
+      </tr>
+    </tbody>
+  </table>
+</div>
+<nav class="navbar fixed-bottom navbar-light bg-info text-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" >Usuário: <b>"{{Usuario}}"</b></a>
+    <button 
+      class="btn btn-danger btn"
+      (click)="sair()"
+      type="button"><i 
+      class="bi bi-door-open"></i>Sair
+    </button>
+  </div> 
+</nav>
