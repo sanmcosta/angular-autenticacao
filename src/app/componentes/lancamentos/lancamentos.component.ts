@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LancamentoService } from 'src/app/servicos/lancamento.service';
 import {Lancamentos} from 'src/app/models/lancamento.model';
 import { HttpService } from 'src/app/servicos/http.service';
+import { DataHoraService } from 'src/app/servicos/data-hora.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lancamentos',
   templateUrl: './lancamentos.component.html',
   styleUrls: ['./lancamentos.component.css']
 })
-export class LancamentosComponent implements OnInit {
+export class LancamentosComponent implements OnInit,OnDestroy {
 
   constructor(private router: Router,
               private lancamentoService: LancamentoService,
-              private httpService: HttpService) { }
+              private httpService: HttpService,
+              private dataHoraService : DataHoraService) { }
 
   lancamentos: Lancamentos[] = [];
+  dataHoraAtual = '';
+  dataHoraAtualSub: Subscription | undefined;
+  dataTempoReal = '';
+  dataTempoRealSub: Subscription | undefined;
+
+
+  ngOnDestroy(): void {
+      this.dataHoraAtualSub?.unsubscribe();
+      this.dataTempoRealSub?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.lancamentoService.listarTodos().subscribe(
@@ -27,6 +40,12 @@ export class LancamentosComponent implements OnInit {
       },
       erro => { 'Erro ao listar lançamentos'}
     );
+    this.dataHoraAtualSub = this.dataHoraService.dataHora.subscribe(
+      dataHora => this.dataHoraAtual = dataHora
+    );
+    this.dataTempoRealSub = this.dataHoraService.dataHoraTempoReal.subscribe(
+      dataHora => this.dataTempoReal = dataHora
+    ); 
   }
 
   sair() {
@@ -38,6 +57,10 @@ export class LancamentosComponent implements OnInit {
 
   urlLocalizacao(localizacao: string) {
     return "https://www.google.com/maps/search/?api=1&query=" + localizacao;
+  }
+
+  atualizarDataHora(){
+    this.dataHoraService.atualizarDataHora();
   }
   pos = this.httpService.dadosUsuario.sub?.indexOf("@");
   Usuario = this.httpService.dadosUsuario.sub?.substring(0,this.pos); 

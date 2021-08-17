@@ -12,19 +12,19 @@ export class TipoPipe implements PipeTransform {
         tipo = 'Entrada';
         break;
       case 'INICIO_PAUSA':
-        tipo = 'Início da pausa';
+        tipo = 'Pausa ini';
         break;
       case 'INICIO_ALMOCO':
-        tipo = 'Início do almoço';
+        tipo = 'Almoço ini';
         break;
       case 'TERMINO_TRABALHO':
         tipo = 'Saída';
         break;
       case 'TERMINO_PAUSA':
-        tipo = 'Fim da pausa';
+        tipo = 'Pausa fim';
         break;
       case 'TERMINO_ALMOCO':
-        tipo = 'Fim do almoço';
+        tipo = 'Almoço fim';
         break;
       default:
         tipo = value;

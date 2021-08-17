@@ -19,7 +19,7 @@ export class LancamentoService {
 
   listarTodos(): Observable<any> {
     const id = this.httpService.obterIdUsuario();
-    return this.http.get(env.apiLancamentoUrl+ id+'?sort=tipo,id&dir=ASC',this.httpService.headers());
+    return this.http.get(env.apiLancamentoUrl+ id,this.httpService.headers());
   }
 
 }

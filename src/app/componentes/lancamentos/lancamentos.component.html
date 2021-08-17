@@ -1,4 +1,5 @@
 <div class="p-1 mb-2 bg-info text-dark">
+  <span><p>Data e Hora: {{dataTempoReal}}</p></span>
   <h1  style="text-align:center">
     <i class="bi bi-file-earmark-spreadsheet" 
        style="font-size: 2rem;"
@@ -46,6 +47,8 @@
 <nav class="navbar fixed-bottom navbar-light bg-info text-dark">
   <div class="container-fluid">
     <a class="navbar-brand" >Usuário: <b>"{{Usuario}}"</b></a>
+    <span><p>Data e Hora: {{dataHoraAtual}}</p></span>
+    <p><button (click)="atualizarDataHora()">Atualizar data</button></p>
     <button 
       class="btn btn-danger btn"
       (click)="sair()"
