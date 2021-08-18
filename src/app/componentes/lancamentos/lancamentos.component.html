@@ -1,5 +1,10 @@
 <div class="p-1 mb-2 bg-info text-dark">
   <span><p>Data e Hora: {{dataTempoReal}}</p></span>
+  <p>
+    <a (click)="downloadCSV()">
+      <i class="bi-file-earmark-excel"></i>
+    </a>
+  </p>  
   <h1  style="text-align:center">
     <i class="bi bi-file-earmark-spreadsheet" 
        style="font-size: 2rem;"

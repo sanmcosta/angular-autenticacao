@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/servicos/http.service';
 import { DataHoraService } from 'src/app/servicos/data-hora.service';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-lancamentos',
   templateUrl: './lancamentos.component.html',
@@ -62,6 +63,11 @@ export class LancamentosComponent implements OnInit,OnDestroy {
   atualizarDataHora(){
     this.dataHoraService.atualizarDataHora();
   }
+
+  downloadCSV() {
+    this.lancamentoService.downloadCSV(this.lancamentos);
+  }
+
   pos = this.httpService.dadosUsuario.sub?.indexOf("@");
   Usuario = this.httpService.dadosUsuario.sub?.substring(0,this.pos); 
 }
