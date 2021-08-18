@@ -68,6 +68,10 @@ export class LancamentosComponent implements OnInit,OnDestroy {
     this.lancamentoService.downloadCSV(this.lancamentos);
   }
 
+  downloadPDF() {
+    this.lancamentoService.downloadPDF(this.lancamentos);
+  }
+
   pos = this.httpService.dadosUsuario.sub?.indexOf("@");
   Usuario = this.httpService.dadosUsuario.sub?.substring(0,this.pos); 
 }

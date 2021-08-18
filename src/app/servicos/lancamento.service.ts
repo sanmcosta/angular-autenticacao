@@ -5,6 +5,8 @@ import { environment as env } from 'src/environments/environment';
 import {Lancamentos} from '../models/lancamento.model';
 import { HttpService } from './http.service';
 import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +26,6 @@ export class LancamentoService {
   }
 
   downloadCSV(lancamentos: Lancamentos[]) {
-   
-    
     const colunas = 'ID,Data,Hora,Tipo,Localização\n';
     const linhas: string[] = [];
     lancamentos.forEach(lanc => {
@@ -39,5 +39,32 @@ export class LancamentoService {
     saveAs(blob, 'lancamentos.csv');
   }
 
+  downloadPDF(lancamentos: Lancamentos[]) {
+    const colunas = ['ID', 'Data', 'Hora', 'Tipo', 'Localização'];
+    const linhas: string [][] = [];
+    lancamentos.forEach(lanc => {
+      const dataHora = lanc.data.split(' ');
+      linhas.push([
+        lanc.id.toString(),
+        dataHora[0],
+        dataHora[1],
+        lanc.tipo,
+        lanc.localizacao
+      ]);
+    });
+    const data = new Date();
+    //const doc = new jsPDF('l', 'mm', 'a1');
+    const doc = new jsPDF();
+    (doc as any).text(15,10,'Listagem de lançamentos: ');
+    (doc as any).setFontSize(8);
+    (doc as any).text(170,10,data.toLocaleString('pt-BR'));
+    (doc as any).autoTable({
+      startY:20,
+      head: [colunas],
+      body: linhas,
+      foot: [colunas],
+      theme:'grid'
+    });
+    doc.save('lancamento-'+data.toLocaleDateString('pt-BR') + '.pdf');
+  }
 }
-
